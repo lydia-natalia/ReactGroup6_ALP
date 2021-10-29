@@ -9,8 +9,8 @@ Pada aplikasi ini menampilkan seluruh karakter yang ada didalam "Breaking Bad" T
 Dan bila melakukan seleksi pada salah satu karakter, akan memunculkan informasi detail mengenai karakter yang dipilih.
 
 Anggota :
-1. Lydia Natalia (lydia-natalia) : Mengelola Git, menambahkan Navigation 
-2. Christopher Owen (ChristopherOwen1212) :
-3. Thaufan Ardi Arafat (ravenbean) : 
-4. Roslynlia (Roslynlia) :
+1. Lydia Natalia (lydia-natalia) : Mengelola Git, menambahkan Navigation, menambahkan redux dan redux-saga
+2. Christopher Owen (ChristopherOwen1212) : membuat halaman detail
+3. Thaufan Ardi Arafat (ravenbean) : melengkapi halaman about
+4. Roslynlia (Roslynlia) : menambahkan redux
 5. Yoeka Virya Adhitthana (yukavirya) : Membuat halaman home & pengambilan data (axios)
