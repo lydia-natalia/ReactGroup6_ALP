@@ -40,7 +40,7 @@ export default function RouteNavigation() {
                         headerShown: false,
                         tabBarLabel: 'About',
                         tabBarIcon: ({ color, size }) => (
-                          <MaterialCommunityIcons name="about" color={color} size={size} />
+                          <MaterialCommunityIcons name="help" color={color} size={size} />
                         ),
                       }}
                     />
