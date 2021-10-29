@@ -1,6 +1,6 @@
 import { takeLatest, put, all, fork } from 'redux-saga/effects';
 import sagaActions from './SagaAction';
-import { selected,valueSelected } from '../store/SelectedReducer';
+import { selected } from '../store/SelectedReducer';
 
 function* selectedAsync(action) {
     try {

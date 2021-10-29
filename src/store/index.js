@@ -34,6 +34,7 @@ const persistedReducer = persistReducer(persistConfig, reducers);
 
 const sagaMiddleware = createSagaMiddleware();
 
+
 const store = configureStore({
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware) => {
@@ -46,4 +47,10 @@ const store = configureStore({
         middleware.push(sagaMiddleware);
         return middleware;
     }
-})  
+})
+
+sagaMiddleware.run(rootSaga);
+
+const persistor = persistStore(store);
+
+export { persistor, store };

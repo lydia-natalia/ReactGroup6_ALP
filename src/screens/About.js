@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import {SafeAreaView, View, Text, StyleSheet} from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
+import { valueSelected} from '../store/SelectedReducer'
 import axios from 'axios'
 
 const AboutScreen = () => {
-    const selectedCharacterId = useSelector((state) => state.character.selectedCharacterId);
+    const selectedCharacterId = useSelector(valueSelected)
     const urlGetData = `https://www.breakingbadapi.com/api/characters/${selectedCharacterId}`
     console.log('SELECTED CHAR: ', selectedCharacterId)
     const [data, setData] = useState([])
@@ -44,7 +45,13 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginTop: 10,
         marginBottom: 20
-    }
+    },
+    nameText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        textAlign: 'center'
+    },
   });
 
 export default AboutScreen

@@ -9,17 +9,17 @@ import { valueSelected } from '../store/SelectedReducer';
 import SagaAction from '../saga/SagaAction';
 
 const HomeScreen = () => {
-    const selectedCharacterId = useSelector((state) => state.character.selectedCharacterId);
-    // console.log(selectedCharacterId);
-    const dispatch = useDispatch();
+    // const selectedCharacterId = useSelector((state) => state.character.selectedCharacterId);
+    // // console.log(selectedCharacterId);
+    // const dispatch = useDispatch();
     
-    const getCharacterDetail = (id) => {
-        dispatch(changeSelectedCharacter(id));
+    // const getCharacterDetail = (id) => {
+    //     dispatch(changeSelectedCharacter(id));
 
-        navigation.dispatch(CommonActions.navigate({
-            name: ScreenName.DetailScreen
-        }))
-    }
+    //     navigation.dispatch(CommonActions.navigate({
+    //         name: ScreenName.DetailScreen
+    //     }))
+    // }
 
     const [isLoading, setLoading] = useState(false)
     const [isRefresh, setIsRefresh] = React.useState(false)
@@ -29,13 +29,18 @@ const HomeScreen = () => {
     //const valueSelected = useSelector((state) => state.selected.value)
     
     const value = useSelector(valueSelected)
-
     const dispatch = useDispatch()
 
     const urlGetData = 'https://www.breakingbadapi.com/api/characters'
 
     useEffect(() => {
         setLoading(true)
+        if(value != 0 && value != undefined){
+            alert("Load Selected Data");
+            navigation.dispatch(CommonActions.navigate({
+                name: ScreenName.DetailScreen
+            }))
+        }
         getData(() => setLoading(false))
     }, [])
 
@@ -51,13 +56,6 @@ const HomeScreen = () => {
             setListData(data ?? [])
             callback()
         }
-    }
-
-    if(value != 0){
-        alert("Load Saved Data");
-        navigation.dispatch(CommonActions.navigate({
-            name: ScreenName.DetailScreen
-        }))
     }
 
     if (isLoading) {
@@ -79,11 +77,13 @@ const HomeScreen = () => {
 
     renderItem = ({ item, index }) => {
         return (
-            <TouchableOpacity onPress={() => getCharacterDetail(item.char_id)} style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+            <TouchableOpacity onPress={() => _onPress(item)} style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
                 <View style={[styles.imageWrapper, {marginTop: ((index == 0) ? 15 : 0)}]}>
                     <Image source={{uri: item.img}} style={styles.imageSize} />
                 </View>
-                <Text style={styles.nameText}>{item.name} {(value == item.char_id ? "SELECTED" : "")}</Text>
+                <View>
+                    <Text style={styles.nameText} >{item.name} <Text style={{color:"red"}}>{(value == item.char_id ? "SELECTED" : "")}</Text></Text> 
+                </View>
             </TouchableOpacity>
         )
     }

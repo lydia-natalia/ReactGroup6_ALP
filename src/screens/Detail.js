@@ -1,15 +1,18 @@
 import React,{useState, useEffect}from 'react'
-import {SafeAreaView, View, Text, StyleSheet,ActivityIndicator} from 'react-native'
+import {SafeAreaView, View, Text,Image, Dimensions, StyleSheet,ActivityIndicator} from 'react-native'
 import { valueSelected} from '../store/SelectedReducer'
 import { useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+import { CommonActions } from '@react-navigation/native';
+import ScreenName from '../navigation/ScreenName';
 import axios from 'axios'
 
 const DetailScreen = () => {
     const [isLoading, setLoading] = useState(false)
-    const [data, setData] = useState([])
+    const [listData, setListData] = useState([])
     const value = useSelector(valueSelected)
-    console.log(value)
     const urlGetData = 'https://www.breakingbadapi.com/api/characters/'
+    const navigation = useNavigation();
 
     useEffect(() => {
         setLoading(true)
@@ -19,10 +22,11 @@ const DetailScreen = () => {
     }, [])
 
     const getData = async (callback) => {
+        console.log(value)
         const response = await axios.get(urlGetData+value)
         const { data, status } = response
-        if (status === 200 && data) {
-            setData(data ?? [])
+        if (status === 200 && data[0]) {
+            setListData(data[0] ?? [])
             callback()
         }
     }
@@ -39,15 +43,16 @@ const DetailScreen = () => {
         <SafeAreaView style={{flex: 1}}>
             <View style={{flexGrow: 1, justifyContent: 'center', alignItems: 'center'}}>
                 <View style={{ justifyContent: 'center', alignItems: 'center'}}>
-                    <Text style={styles.titleText}>DETAIL</Text>
+                    <Text style={styles.titleText}>{listData.name}</Text>
                 </View>
                 <View style={[styles.imageWrapper, {marginTop: 15}]}>
-                    <Image source={{uri: data.img}} style={styles.imageSize} />
+                    <Image source={{uri: listData.img}} style={styles.imageSize} />
                 </View>
-                <Text style={styles.nameText}>Name: {data.name}</Text>
-                <Text style={styles.nameText}>Nickname: {data.nickname}</Text>
-                <Text style={styles.nameText}>Date of Birth: {data.birthday}</Text>
-                <Text style={styles.nameText}>Status: {data.status}</Text>
+                <Text style={styles.nameText}>Nickname: {listData.nickname}</Text>
+                <Text style={styles.nameText}>Date of Birth: {listData.birthday}</Text>
+                <Text style={styles.nameText}>Occupation: {(listData.occupation == undefined ? "" : (listData.occupation.length > 1 ? listData.occupation.join(', ') : listData.occupation))}</Text>
+                <Text style={styles.nameText}>Portrayed: {listData.portrayed}</Text>
+                <Text style={styles.nameText}>Status: {listData.status}</Text>
             </View>
         </SafeAreaView>
     )
