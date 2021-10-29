@@ -1,7 +1,26 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {SafeAreaView, View, Text, StyleSheet} from 'react-native'
+import { useSelector, useDispatch } from 'react-redux'
+import axios from 'axios'
 
 const AboutScreen = () => {
+    const selectedCharacterId = useSelector((state) => state.character.selectedCharacterId);
+    const urlGetData = `https://www.breakingbadapi.com/api/characters/${selectedCharacterId}`
+    console.log('SELECTED CHAR: ', selectedCharacterId)
+    const [data, setData] = useState([])
+
+    const response = axios.get(urlGetData)
+        .then(res => {
+            const data = res.data[0]
+            setData(data)
+            console.log('RESPONSE: ', data)
+        })
+    // const { data, status } = response
+    // if (status === 200 && data[0]) {
+    //     setListData(data[0] ?? [])
+    //     console.log('SELECTED NAME: ', data[0])
+    // }
+    
     return (
         <SafeAreaView style={{flex: 1}}>
             <View style={{flexGrow: 1}}>
@@ -12,6 +31,7 @@ const AboutScreen = () => {
                         {"\n\n"}
                         This app is designed to make it easy for the viewer to know more about all characters.
                     </Text>
+                    {data  && <Text style={styles.nameText}>Selected Character: {data.name}</Text>}
                 </View>
             </View>
         </SafeAreaView>
