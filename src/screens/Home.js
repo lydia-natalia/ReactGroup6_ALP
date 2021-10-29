@@ -9,6 +9,18 @@ import { valueSelected } from '../store/SelectedReducer';
 import SagaAction from '../saga/SagaAction';
 
 const HomeScreen = () => {
+    const selectedCharacterId = useSelector((state) => state.character.selectedCharacterId);
+    // console.log(selectedCharacterId);
+    const dispatch = useDispatch();
+    
+    const getCharacterDetail = (id) => {
+        dispatch(changeSelectedCharacter(id));
+
+        navigation.dispatch(CommonActions.navigate({
+            name: ScreenName.DetailScreen
+        }))
+    }
+
     const [isLoading, setLoading] = useState(false)
     const [isRefresh, setIsRefresh] = React.useState(false)
     const [listData, setListData] = useState([])
@@ -67,7 +79,7 @@ const HomeScreen = () => {
 
     renderItem = ({ item, index }) => {
         return (
-            <TouchableOpacity onPress={() => _onPress(item)} style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+            <TouchableOpacity onPress={() => getCharacterDetail(item.char_id)} style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
                 <View style={[styles.imageWrapper, {marginTop: ((index == 0) ? 15 : 0)}]}>
                     <Image source={{uri: item.img}} style={styles.imageSize} />
                 </View>

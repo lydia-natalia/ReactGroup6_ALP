@@ -46,10 +46,4 @@ const store = configureStore({
         middleware.push(sagaMiddleware);
         return middleware;
     }
-})
-
-sagaMiddleware.run(rootSaga);
-
-const persistor = persistStore(store);
-
-export { persistor, store };
+})  

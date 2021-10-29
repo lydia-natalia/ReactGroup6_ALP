@@ -54,12 +54,29 @@ const DetailScreen = () => {
 }
 
 const styles = StyleSheet.create({
+    imageSize: {
+        height: Dimensions.get('window').height / 2.5,
+        width: Dimensions.get('window').height / 3,
+        borderRadius: 15,
+        overflow: 'hidden',
+        padding: 10,
+    },
+    imageWrapper: {
+        borderRadius: 15,
+        marginBottom: 30,
+    },
     titleText: {
         fontSize: 45,
         fontWeight: 'bold',
         marginTop: 10,
         marginBottom: 20
-    }
+    },
+    nameText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        textAlign: 'center'
+    },
   });
 
 export default DetailScreen
