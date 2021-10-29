@@ -1,11 +1,24 @@
 import React, {useState, useEffect} from 'react'
-import {SafeAreaView, FlatList, TouchableOpacity, Dimensions, Image, View, Text, ActivityIndicator, StyleSheet} from 'react-native'
+import {SafeAreaView, FlatList, TouchableOpacity, Dimensions, Image, View, Text, ActivityIndicator, StyleSheet, Alert} from 'react-native'
 import axios from 'axios'
+import { useNavigation } from '@react-navigation/native';
+import ScreenName from '../navigation/ScreenName';
+import { CommonActions } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { valueSelected } from '../store/SelectedReducer';
+import SagaAction from '../saga/SagaAction';
 
 const HomeScreen = () => {
     const [isLoading, setLoading] = useState(false)
     const [isRefresh, setIsRefresh] = React.useState(false)
     const [listData, setListData] = useState([])
+    const navigation = useNavigation();
+    
+    //const valueSelected = useSelector((state) => state.selected.value)
+    
+    const value = useSelector(valueSelected)
+
+    const dispatch = useDispatch()
 
     const urlGetData = 'https://www.breakingbadapi.com/api/characters'
 
@@ -28,6 +41,13 @@ const HomeScreen = () => {
         }
     }
 
+    if(value != 0){
+        alert("Load Saved Data");
+        navigation.dispatch(CommonActions.navigate({
+            name: ScreenName.DetailScreen
+        }))
+    }
+
     if (isLoading) {
         return (
             <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
@@ -36,8 +56,13 @@ const HomeScreen = () => {
         )
     }
 
+
     _onPress = (item) => {
-        alert(item);
+        var id = item.char_id
+        dispatch({ type: SagaAction.selected.SELECTED, id})
+        navigation.dispatch(CommonActions.navigate({
+            name: ScreenName.DetailScreen
+        }))
     }
 
     renderItem = ({ item, index }) => {
@@ -46,7 +71,7 @@ const HomeScreen = () => {
                 <View style={[styles.imageWrapper, {marginTop: ((index == 0) ? 15 : 0)}]}>
                     <Image source={{uri: item.img}} style={styles.imageSize} />
                 </View>
-                <Text style={styles.nameText}>{item.name}</Text>
+                <Text style={styles.nameText}>{item.name} {(value == item.char_id ? "SELECTED" : "")}</Text>
             </TouchableOpacity>
         )
     }

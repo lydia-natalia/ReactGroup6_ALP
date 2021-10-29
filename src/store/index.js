@@ -1,10 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import CloneCounterReducer from './CloneCounterReducer';
-import counterReducer from './CounterReducer';
+import selectedReducer from './SelectedReducer';
 import { combineReducers } from 'redux';
 
 import createSagaMiddleware from 'redux-saga';
-import { rootSaga } from '../saga'
+import { rootSaga } from '../saga/Index'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
@@ -23,13 +22,12 @@ import autoMergeLevel1 from 'redux-persist/lib/stateReconciler/autoMergeLevel1';
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
-    whitelist: ['cloneCounter'],
+    whitelist: ['selected'],
     stateReconciler: autoMergeLevel1,
 };
 
 const reducers = combineReducers({
-    counter: counterReducer,
-    cloneCounter: CloneCounterReducer
+    selected: selectedReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
