@@ -1,11 +1,29 @@
 import React, {useState, useEffect} from 'react'
 import {SafeAreaView, FlatList, TouchableOpacity, Dimensions, Image, View, Text, ActivityIndicator, StyleSheet} from 'react-native'
 import axios from 'axios'
+import ScreenName from '../navigation/ScreenName'; 
+import { useNavigation, CommonActions } from '@react-navigation/native'
+import { useSelector, useDispatch } from 'react-redux'
+import { changeSelectedCharacter } from '../store/CharacterReducer'
+
 
 const HomeScreen = () => {
+    const selectedCharacterId = useSelector((state) => state.character.selectedCharacterId);
+    // console.log(selectedCharacterId);
+    const dispatch = useDispatch();
+    
+    const getCharacterDetail = (id) => {
+        dispatch(changeSelectedCharacter(id));
+
+        navigation.dispatch(CommonActions.navigate({
+            name: ScreenName.DetailScreen
+        }))
+    }
+
     const [isLoading, setLoading] = useState(false)
     const [isRefresh, setIsRefresh] = React.useState(false)
     const [listData, setListData] = useState([])
+    const navigation = useNavigation()
 
     const urlGetData = 'https://www.breakingbadapi.com/api/characters'
 
@@ -42,7 +60,7 @@ const HomeScreen = () => {
 
     renderItem = ({ item, index }) => {
         return (
-            <TouchableOpacity onPress={() => _onPress(item)} style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+            <TouchableOpacity onPress={() => getCharacterDetail(item.char_id)} style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
                 <View style={[styles.imageWrapper, {marginTop: ((index == 0) ? 15 : 0)}]}>
                     <Image source={{uri: item.img}} style={styles.imageSize} />
                 </View>

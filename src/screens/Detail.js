@@ -1,7 +1,10 @@
 import React from 'react'
 import {SafeAreaView, View, Text, StyleSheet} from 'react-native'
+import { useSelector, useDispatch } from 'react-redux'
 
 const DetailScreen = () => {
+    const selectedCharacterId = useSelector((state) => state.character.selectedCharacterId);
+    // console.log(selectedCharacterId);
     return (
         <SafeAreaView style={{flex: 1}}>
             <View style={{flexGrow: 1}}>
