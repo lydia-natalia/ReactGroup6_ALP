@@ -36,8 +36,6 @@ const DetailScreen = () => {
         }
     }
 
-    console.log(listData.img);
-
     if (isLoading) {
         return (
             <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
