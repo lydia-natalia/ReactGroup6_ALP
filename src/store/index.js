@@ -3,7 +3,7 @@ import selectedReducer from './SelectedReducer';
 import { combineReducers } from 'redux';
 
 import createSagaMiddleware from 'redux-saga';
-import { rootSaga } from '../saga/Index'
+import { rootSaga } from '../saga/index'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
